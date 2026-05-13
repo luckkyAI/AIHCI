@@ -166,7 +166,14 @@ img { max-width: 100%; height: auto; display: block; }
 .role-card .role-desc  { font-size: .8rem; color: rgba(255,255,255,.72); line-height: 1.5; }
 .role-divider { width: 1px; height: 60px; background: rgba(255,255,255,.25); }
 @media (max-width: 540px) {
-  .role-divider { width: 60px; height: 1px; }
+  .role-divider { width: 40px; height: 1px; }
+  .role-card { min-width: 120px; max-width: 160px; padding: 1rem 1rem; }
+  .role-card .role-emoji { font-size: 2rem; }
+  .role-card .role-label { font-size: 1.1rem; }
+  .role-card .role-desc { font-size: .68rem; }
+  .role-overlay-title { font-size: 1.3rem !important; }
+  .role-overlay-subtitle { font-size: .78rem !important; }
+  .role-cards-wrap { gap: 1rem !important; }
 }
 
 /* role chip in nav */
@@ -591,14 +598,14 @@ kbd {
       <span style="color:rgba(255,255,255,.9);font-size:1rem;font-weight:700;letter-spacing:.06em;">深信服 · AI超融合</span>
     </div>
 
-    <h1 style="font-size:clamp(1.5rem,6vw,2.25rem);font-weight:800;color:#fff;letter-spacing:-.03em;line-height:1.15;margin-bottom:.6rem;">
+    <h1 class="role-overlay-title" style="font-size:clamp(1.5rem,6vw,2.25rem);font-weight:800;color:#fff;letter-spacing:-.03em;line-height:1.15;margin-bottom:.6rem;">
       请选择您的角色
     </h1>
-    <p style="color:rgba(255,255,255,.6);font-size:.9rem;margin-bottom:2.5rem;line-height:1.6;">
+    <p class="role-overlay-subtitle" style="color:rgba(255,255,255,.6);font-size:.9rem;margin-bottom:2.5rem;line-height:1.6;">
       不同角色将展示定制化内容，随时可在右上角切换
     </p>
 
-    <div style="display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:wrap;">
+    <div class="role-cards-wrap" style="display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:nowrap;">
       <div class="role-card sales" onclick="selectRole('sales')" tabindex="0" role="button">
         <div class="role-emoji">💼</div>
         <div class="role-label">我是销售</div>
@@ -908,6 +915,10 @@ kbd {
                 <span class="acc-icon text-xl flex-shrink-0 mt-0.5" style="color:var(--text3);">›</span>
               </button>
               <div class="acc-body pt-3 mt-3 border-t border-gray-200 text-sm text-gray-600 leading-relaxed">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">应对话术</span>
+                  <button class="copy-btn" onclick="copyAccBody(this)">📋 复制</button>
+                </div>
                 <div class="box box-green">
                   <b>✅ 应对1：非线性复杂度</b>
                   现在确实能跑，但随着团队扩大、Agent数量增多，管理复杂度是<strong style="color:var(--blue)">非线性增长</strong>的。您现在可能有2～3个Agent，但如果是20个、100个呢？每个都单独维护模型密钥、单独部署、单独处理异常？我们的平台可以对多种类型Agent进行统一运维管理（比如观测合同审核Agent审核慢原因等），为智能体运行提供可靠性底座。
@@ -931,6 +942,10 @@ kbd {
                 <span class="acc-icon text-xl flex-shrink-0 mt-0.5" style="color:var(--text3);">›</span>
               </button>
               <div class="acc-body pt-3 mt-3 border-t border-gray-200 text-sm text-gray-600 leading-relaxed">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">应对话术</span>
+                  <button class="copy-btn" onclick="copyAccBody(this)">📋 复制</button>
+                </div>
                 <div class="box box-green">
                   <b>✅ 应对1：几乎不需要改造</b>
                   第三方低代码平台（Dify/FastGPT）直接以导出配置文件形式纳管，版本基本<strong style="color:var(--blue)">无感迁移</strong>。自研高代码Agent只需要容器化（我们提供DevBox开发环境），不改业务代码，打包成OCI镜像即可接入。这是<strong style="color:var(--blue)">最小侵入式架构</strong>。
@@ -950,6 +965,10 @@ kbd {
                 <span class="acc-icon text-xl flex-shrink-0 mt-0.5" style="color:var(--text3);">›</span>
               </button>
               <div class="acc-body pt-3 mt-3 border-t border-gray-200 text-sm text-gray-600 leading-relaxed">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">应对话术</span>
+                  <button class="copy-btn" onclick="copyAccBody(this)">📋 复制</button>
+                </div>
                 <div class="box box-green">
                   <b>✅ 应对：按架构形态适配</b>
                   我们会根据ISV的架构形态做适配。比如ISV通过容器化打包部署的，都可以比较<strong style="color:var(--blue)">平滑地承载到AI HCI</strong>上。
@@ -969,6 +988,10 @@ kbd {
                 <span class="acc-icon text-xl flex-shrink-0 mt-0.5" style="color:var(--text3);">›</span>
               </button>
               <div class="acc-body pt-3 mt-3 border-t border-gray-200 text-sm text-gray-600 leading-relaxed">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">应对话术</span>
+                  <button class="copy-btn" onclick="copyAccBody(this)">📋 复制</button>
+                </div>
                 <div class="box box-green">
                   <b>✅ 应对：私有化部署核心优势</b>
                   理解您说的，这正是我们<strong style="color:var(--blue)">私有化部署的核心优势</strong>所在。AI HCI在原HCI基础上平滑演进，完全部署在您自己的机房或私有云，<strong style="color:var(--blue)">数据不出门</strong>，模型推理也可以选择私有化部署的模型或托管云安全算力。
@@ -1672,7 +1695,7 @@ function copyScript(id, btn) {
     btn.textContent = '✅ 已复制';
     setTimeout(() => {
       btn.classList.remove('copied');
-      btn.textContent = '📋 复制话术';
+      btn.textContent = ' 复制话术';
     }, 2000);
   }).catch(() => {
     // fallback
@@ -1687,6 +1710,33 @@ function copyScript(id, btn) {
     setTimeout(() => {
       btn.classList.remove('copied');
       btn.textContent = '📋 复制话术';
+    }, 2000);
+  });
+}
+
+function copyAccBody(btn) {
+  const body = btn.closest('.acc-body');
+  if (!body) return;
+  const text = body.innerText.replace('📋 复制', '').trim();
+  navigator.clipboard.writeText(text).then(() => {
+    btn.classList.add('copied');
+    btn.textContent = '✅ 已复制';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.textContent = ' 复制';
+    }, 2000);
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    btn.classList.add('copied');
+    btn.textContent = '✅ 已复制';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.textContent = ' 复制';
     }, 2000);
   });
 }
