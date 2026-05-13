@@ -166,7 +166,11 @@ img { max-width: 100%; height: auto; display: block; }
 .role-card .role-desc  { font-size: .8rem; color: rgba(255,255,255,.72); line-height: 1.5; }
 .role-divider { width: 1px; height: 60px; background: rgba(255,255,255,.25); }
 @media (max-width: 540px) {
-  .role-divider { width: 60px; height: 1px; }
+  .role-divider { width: 30px; height: 1px; }
+  .role-card { min-width: 100px; max-width: 46%; padding: 1.25rem 1rem; }
+  .role-card .role-emoji { font-size: 2rem; }
+  .role-card .role-label { font-size: 1.05rem; }
+  .role-card .role-desc { font-size: .65rem; }
 }
 
 /* role chip in nav */
@@ -526,6 +530,26 @@ kbd {
 .copy-btn:hover { background: var(--blue); color: #fff; }
 .copy-btn.copied { background: var(--green-bg); color: var(--green); border-color: var(--green); }
 
+.copy-btn-sm {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgba(0,0,0,.04);
+  border: 1px solid rgba(0,0,0,.08);
+  color: var(--blue);
+  font-size: .7em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .15s;
+  white-space: nowrap;
+  user-select: none;
+  flex-shrink: 0;
+}
+.copy-btn-sm:hover { background: var(--blue); color: #fff; }
+.copy-btn-sm.copied { background: var(--green-bg); color: var(--green); border-color: var(--green); }
+
 /* ─── SCRIPT BLOCK ─── */
 .script-block {
   background: var(--bg2);
@@ -598,7 +622,7 @@ kbd {
       不同角色将展示定制化内容，随时可在右上角切换
     </p>
 
-    <div style="display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:nowrap;">
       <div class="role-card sales" onclick="selectRole('sales')" tabindex="0" role="button">
         <div class="role-emoji">💼</div>
         <div class="role-label">我是销售</div>
@@ -909,15 +933,24 @@ kbd {
               </button>
               <div class="acc-body pt-3 mt-3 border-t border-gray-200 text-sm text-gray-600 leading-relaxed">
                 <div class="box box-green">
-                  <b>✅ 应对1：非线性复杂度</b>
+                  <div class="flex items-center justify-between mb-1">
+                    <b>✅ 应对1：非线性复杂度</b>
+                    <button class="copy-btn-sm" onclick="copyBox(this)">📋 复制</button>
+                  </div>
                   现在确实能跑，但随着团队扩大、Agent数量增多，管理复杂度是<strong style="color:var(--blue)">非线性增长</strong>的。您现在可能有2～3个Agent，但如果是20个、100个呢？每个都单独维护模型密钥、单独部署、单独处理异常？我们的平台可以对多种类型Agent进行统一运维管理（比如观测合同审核Agent审核慢原因等），为智能体运行提供可靠性底座。
                 </div>
                 <div class="box box-green">
-                  <b>✅ 应对2：平台封闭问题</b>
+                  <div class="flex items-center justify-between mb-1">
+                    <b>✅ 应对2：平台封闭问题</b>
+                    <button class="copy-btn-sm" onclick="copyBox(this)">📋 复制</button>
+                  </div>
                   每家低代码商业版平台封闭，组件工具无法复用；平台封闭导致数据孤岛，跨系统意图路由拉不通。既有开源的又有商业版低代码，技术栈不统一，管理起来也不方便。
                 </div>
                 <div class="box box-green">
-                  <b>✅ 应对3：开放不绑定</b>
+                  <div class="flex items-center justify-between mb-1">
+                    <b>✅ 应对3：开放不绑定</b>
+                    <button class="copy-btn-sm" onclick="copyBox(this)">📋 复制</button>
+                  </div>
                   我们的平台<strong style="color:var(--blue)">不绑定</strong>用户使用Agent的开发平台，支持对各业务部门散落在不同低代码平台（当前支持Dify和SF-FastGPT）的Agent统一收到AI HCI上进行统一的可观测管理。
                 </div>
               </div>
@@ -932,11 +965,17 @@ kbd {
               </button>
               <div class="acc-body pt-3 mt-3 border-t border-gray-200 text-sm text-gray-600 leading-relaxed">
                 <div class="box box-green">
-                  <b>✅ 应对1：几乎不需要改造</b>
+                  <div class="flex items-center justify-between mb-1">
+                    <b>✅ 应对1：几乎不需要改造</b>
+                    <button class="copy-btn-sm" onclick="copyBox(this)">📋 复制</button>
+                  </div>
                   第三方低代码平台（Dify/FastGPT）直接以导出配置文件形式纳管，版本基本<strong style="color:var(--blue)">无感迁移</strong>。自研高代码Agent只需要容器化（我们提供DevBox开发环境），不改业务代码，打包成OCI镜像即可接入。这是<strong style="color:var(--blue)">最小侵入式架构</strong>。
                 </div>
                 <div class="box box-amber">
-                  <b>✅ 应对2：封闭平台迁移风险（引导客户认知）</b>
+                  <div class="flex items-center justify-between mb-1">
+                    <b>✅ 应对2：封闭平台迁移风险（引导客户认知）</b>
+                    <button class="copy-btn-sm" onclick="copyBox(this)">📋 复制</button>
+                  </div>
                   如果使用了阿里百炼、百度千帆、字节hiagent，因涉及到各自平台知识库、数据库、记忆库<strong style="color:var(--text)">技术栈封闭</strong>，无法完全迁移，各平台插件也无法导出迁移。这也是我们建议尽早统一到中立平台的原因。
                 </div>
               </div>
@@ -951,11 +990,17 @@ kbd {
               </button>
               <div class="acc-body pt-3 mt-3 border-t border-gray-200 text-sm text-gray-600 leading-relaxed">
                 <div class="box box-green">
-                  <b>✅ 应对：按架构形态适配</b>
+                  <div class="flex items-center justify-between mb-1">
+                    <b>✅ 应对：按架构形态适配</b>
+                    <button class="copy-btn-sm" onclick="copyBox(this)">📋 复制</button>
+                  </div>
                   我们会根据ISV的架构形态做适配。比如ISV通过容器化打包部署的，都可以比较<strong style="color:var(--blue)">平滑地承载到AI HCI</strong>上。
                 </div>
                 <div class="box box-blue">
-                  <b>💡 如果客户追问"为什么要统一到AI HCI？"</b>
+                  <div class="flex items-center justify-between mb-1">
+                    <b>💡 如果客户追问"为什么要统一到AI HCI？"</b>
+                    <button class="copy-btn-sm" onclick="copyBox(this)">📋 复制</button>
+                  </div>
                   现在一、两个ISV Agent的时候问题不明显。但后面Agent越来越多，模型越来越多，数据越来越分散，运维越来越复杂。需要<strong style="color:var(--blue)">统一承载Agent的基础设施平台</strong>。当Agent越来越多，就一定成为运维灾难。
                 </div>
               </div>
@@ -1688,6 +1733,35 @@ function copyScript(id, btn) {
     setTimeout(() => {
       btn.classList.remove('copied');
       btn.textContent = '📋 复制话术';
+    }, 2000);
+  });
+}
+
+function copyBox(btn) {
+  const box = btn.closest('.box');
+  if (!box) return;
+  const clone = box.cloneNode(true);
+  clone.querySelector('.copy-btn-sm')?.remove();
+  const text = clone.innerText.trim();
+  navigator.clipboard.writeText(text).then(() => {
+    btn.classList.add('copied');
+    btn.textContent = '✅ 已复制';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.textContent = '📋 复制';
+    }, 2000);
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    btn.classList.add('copied');
+    btn.textContent = '✅ 已复制';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.textContent = '📋 复制';
     }, 2000);
   });
 }
