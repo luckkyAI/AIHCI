@@ -166,14 +166,7 @@ img { max-width: 100%; height: auto; display: block; }
 .role-card .role-desc  { font-size: .8rem; color: rgba(255,255,255,.72); line-height: 1.5; }
 .role-divider { width: 1px; height: 60px; background: rgba(255,255,255,.25); }
 @media (max-width: 540px) {
-  .role-divider { width: 40px; height: 1px; }
-  .role-card { min-width: 120px; max-width: 160px; padding: 1rem 1rem; }
-  .role-card .role-emoji { font-size: 2rem; }
-  .role-card .role-label { font-size: 1.1rem; }
-  .role-card .role-desc { font-size: .68rem; }
-  .role-overlay-title { font-size: 1.3rem !important; }
-  .role-overlay-subtitle { font-size: .78rem !important; }
-  .role-cards-wrap { gap: 1rem !important; }
+  .role-divider { width: 60px; height: 1px; }
 }
 
 /* role chip in nav */
@@ -598,14 +591,14 @@ kbd {
       <span style="color:rgba(255,255,255,.9);font-size:1rem;font-weight:700;letter-spacing:.06em;">深信服 · AI超融合</span>
     </div>
 
-    <h1 class="role-overlay-title" style="font-size:clamp(1.5rem,6vw,2.25rem);font-weight:800;color:#fff;letter-spacing:-.03em;line-height:1.15;margin-bottom:.6rem;">
+    <h1 style="font-size:clamp(1.5rem,6vw,2.25rem);font-weight:800;color:#fff;letter-spacing:-.03em;line-height:1.15;margin-bottom:.6rem;">
       请选择您的角色
     </h1>
-    <p class="role-overlay-subtitle" style="color:rgba(255,255,255,.6);font-size:.9rem;margin-bottom:2.5rem;line-height:1.6;">
+    <p style="color:rgba(255,255,255,.6);font-size:.9rem;margin-bottom:2.5rem;line-height:1.6;">
       不同角色将展示定制化内容，随时可在右上角切换
     </p>
 
-    <div class="role-cards-wrap" style="display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:nowrap;">
+    <div style="display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:wrap;">
       <div class="role-card sales" onclick="selectRole('sales')" tabindex="0" role="button">
         <div class="role-emoji">💼</div>
         <div class="role-label">我是销售</div>
@@ -915,10 +908,6 @@ kbd {
                 <span class="acc-icon text-xl flex-shrink-0 mt-0.5" style="color:var(--text3);">›</span>
               </button>
               <div class="acc-body pt-3 mt-3 border-t border-gray-200 text-sm text-gray-600 leading-relaxed">
-                <div class="flex items-center justify-between mb-2">
-                  <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">应对话术</span>
-                  <button class="copy-btn" onclick="copyAccBody(this)">📋 复制</button>
-                </div>
                 <div class="box box-green">
                   <b>✅ 应对1：非线性复杂度</b>
                   现在确实能跑，但随着团队扩大、Agent数量增多，管理复杂度是<strong style="color:var(--blue)">非线性增长</strong>的。您现在可能有2～3个Agent，但如果是20个、100个呢？每个都单独维护模型密钥、单独部署、单独处理异常？我们的平台可以对多种类型Agent进行统一运维管理（比如观测合同审核Agent审核慢原因等），为智能体运行提供可靠性底座。
@@ -942,10 +931,6 @@ kbd {
                 <span class="acc-icon text-xl flex-shrink-0 mt-0.5" style="color:var(--text3);">›</span>
               </button>
               <div class="acc-body pt-3 mt-3 border-t border-gray-200 text-sm text-gray-600 leading-relaxed">
-                <div class="flex items-center justify-between mb-2">
-                  <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">应对话术</span>
-                  <button class="copy-btn" onclick="copyAccBody(this)">📋 复制</button>
-                </div>
                 <div class="box box-green">
                   <b>✅ 应对1：几乎不需要改造</b>
                   第三方低代码平台（Dify/FastGPT）直接以导出配置文件形式纳管，版本基本<strong style="color:var(--blue)">无感迁移</strong>。自研高代码Agent只需要容器化（我们提供DevBox开发环境），不改业务代码，打包成OCI镜像即可接入。这是<strong style="color:var(--blue)">最小侵入式架构</strong>。
@@ -965,10 +950,6 @@ kbd {
                 <span class="acc-icon text-xl flex-shrink-0 mt-0.5" style="color:var(--text3);">›</span>
               </button>
               <div class="acc-body pt-3 mt-3 border-t border-gray-200 text-sm text-gray-600 leading-relaxed">
-                <div class="flex items-center justify-between mb-2">
-                  <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">应对话术</span>
-                  <button class="copy-btn" onclick="copyAccBody(this)">📋 复制</button>
-                </div>
                 <div class="box box-green">
                   <b>✅ 应对：按架构形态适配</b>
                   我们会根据ISV的架构形态做适配。比如ISV通过容器化打包部署的，都可以比较<strong style="color:var(--blue)">平滑地承载到AI HCI</strong>上。
@@ -988,10 +969,6 @@ kbd {
                 <span class="acc-icon text-xl flex-shrink-0 mt-0.5" style="color:var(--text3);">›</span>
               </button>
               <div class="acc-body pt-3 mt-3 border-t border-gray-200 text-sm text-gray-600 leading-relaxed">
-                <div class="flex items-center justify-between mb-2">
-                  <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">应对话术</span>
-                  <button class="copy-btn" onclick="copyAccBody(this)">📋 复制</button>
-                </div>
                 <div class="box box-green">
                   <b>✅ 应对：私有化部署核心优势</b>
                   理解您说的，这正是我们<strong style="color:var(--blue)">私有化部署的核心优势</strong>所在。AI HCI在原HCI基础上平滑演进，完全部署在您自己的机房或私有云，<strong style="color:var(--blue)">数据不出门</strong>，模型推理也可以选择私有化部署的模型或托管云安全算力。
@@ -1109,7 +1086,7 @@ kbd {
                 </div>
                 <div class="box box-blue">
                   <b>💡 销售的机会</b>
-                  优选SF-FastGPT，客户一般是先选择一个场景跑通，如知识库、智能客服，见效快、风险低，场景跑顺了再扩算力，再批量复制智能体。
+                  如果客户是高代码，优先推AI HCI高代码开发环境（内置Langchain和LangGraph），如果客户已经使用低代码开发，推荐客户在AIHCI内置的低代码开发平台进行开发，把已有的低代码环境迁移到AIHCI上，实现从开发到承载、运维一体化。
                 </div>
               </div>
             </div>
@@ -1334,10 +1311,10 @@ kbd {
                   <tr><td>外包/ISV做</td><td class="td-signal">多类型Agent迁移统一管理需求</td></tr>
                   <tr><td class="td-q" rowspan="5" style="padding-top:10px;vertical-align:top;">有多少Agent？</td>
                       <td class="td-signal" colspan="2" style="font-size:11px;color:var(--text3);padding-top:10px;">当前智能体已经建设数量大概多少，目前是试点阶段、生产应用还是多部门都在用？</td></tr>
-                  <tr><td>1–10个</td><td>还在Demo阶段，持续培育</td></tr>
-                  <tr><td>10–20个以上</td><td class="td-signal">开始试点内部使用，AI HCI机会点</td></tr>
-                  <tr><td>多部门都在做</td><td class="td-signal">Agent治理诉求紧迫</td></tr>
-                  <tr><td>已生产上线</td><td class="td-signal">⚡ AIHCI机会最大，可立即推进</td></tr>
+                  <tr><td>1–10个</td><td class="td-signal">使用AI HCI内置高代码/低代码开发平台初步试点</td></tr>
+                  <tr><td>10–20个以上</td><td class="td-signal">开始试点内部使用，AI HCI可提供批量Agent运维治理等</td></tr>
+                  <tr><td>多部门都在做</td><td class="td-signal">Agent治理诉求紧迫，可能需要对多部门Agent做统一管理</td></tr>
+                  <tr><td>已生产上线</td><td class="td-signal">⚡ AIHCI机会最大，可立即推进，帮助客户实现生产稳定运行，规模化治理</td></tr>
                   <tr><td class="td-q" rowspan="5" style="padding-top:10px;vertical-align:top;">谁在维护环境？</td>
                       <td class="td-signal" colspan="2" style="font-size:11px;color:var(--text3);padding-top:10px;">模型、向量数据库、Agent Runtime、日志监控，是AI团队自己维护还是IT统一管理？</td></tr>
                   <tr><td>AI团队自己维护</td><td class="td-signal">规模大必然失控，布局平台</td></tr>
@@ -1471,7 +1448,7 @@ kbd {
             <h2>三类客户迁移至 AIHCI 的价值映射</h2>
             <div id="mig-tabs" class="flex gap-0 border-b-2 border-gray-200 mb-5 overflow-x-auto scrollbar-hide">
               <button class="mig-tab touch px-4 py-2 text-sm font-medium cursor-pointer whitespace-nowrap bg-transparent border-none border-b-2 border-blue-600 mb-[-2px] text-blue-600 font-bold" onclick="switchMig(this,'mt1')">
-                第三方平台迁移<br><small class="text-xs text-gray-500">Dify / FastGPT</small>
+                第三方平台迁移<br><small class="text-xs text-gray-500">Dify</small>
               </button>
               <button class="mig-tab touch px-4 py-2 text-sm font-medium cursor-pointer whitespace-nowrap bg-transparent border-none border-b-2 border-transparent mb-[-2px] text-gray-600" onclick="switchMig(this,'mt2')">
                 自建Agent迁移<br><small class="text-xs text-gray-500">LangChain / 自研</small>
@@ -1486,17 +1463,18 @@ kbd {
               <div class="mig-grid">
                 <div>
                   <p class="text-xs font-bold uppercase mb-2 text-red-600">当前痛点</p>
-                  <div class="box box-red"><b>多实例数据混乱</b><span>各部门各自部署Dify，数据隔离靠人工约定，数据管不住</span></div>
-                  <div class="box box-red"><b>API Key泄漏风险</b><span>密钥直配在平台里，员工离职即高危</span></div>
-                  <div class="box box-red"><b>Token成本黑盒</b><span>无法按部门/应用统计Token消耗，成本无法分摊</span></div>
-                  <div class="box box-red"><b>无操作审计</b><span>出安全事件无法追溯，合规压力大</span></div>
+                  <div class="box box-red"><b>Dify多用户/权限隔离差</b><span>多部门共享Dify的PostgreSQL/向量库，无物理 / 库级硬隔离</span></div>
+                  <div class="box box-red"><b>Dify高可用差</b><span>大规模分布式并发能力弱，需自行改造，运维复杂。</span></div>
+                  <div class="box box-red"><b>第三方闭源平台封闭</b><span>应用流程/知识库/Prompt/插件/对话逻辑全是平台私有格式，不能一键导出、不能迁移。
+哪天换厂商、想私有化、想自己部署，等于全部重做。</span></div>
+                  <div class="box box-red"><b>开源平台无操作审计</b><span>出安全事件无法追溯，合规压力大</span></div>
                 </div>
                 <div>
                   <p class="text-xs font-bold uppercase mb-2 text-green-600">AIHCI 对应价值</p>
-                  <div class="box box-green"><b>工作空间三层隔离</b><span>权限+数据+网关隔离，RBAC三级角色模型</span></div>
-                  <div class="box box-green"><b>密钥集中加密管理</b><span>AI算力网关统一代理，AES-256加密，业务侧无需持有密钥</span></div>
-                  <div class="box box-green"><b>Token精确归因</b><span>精确到工作空间/应用，成本可分摊核算</span></div>
-                  <div class="box box-green"><b>全量操作审计</b><span>毫秒级UTC时间戳，满足等保2.0/SOC2</span></div>
+                  <div class="box box-green"><b>AIHCI内置多部门工作空间隔离</b><span>平台支持创建多个工作空间并关联用户，每个用户相互隔离，避免数据共享</span></div>
+                  <div class="box box-green"><b>内置Dify已做高可用和监控改造</b><span>可灵活定义部署模式（支持单机和集群），自带Agent监控指标</span></div>
+                  <div class="box box-green"><b>开放兼容</b><span>平台支持多种高代代码框架，不锁定平台，用户灵活定义开发模式和开发框架</span></div>
+                  <div class="box box-green"><b>全量操作审计&运行链路观测</b><span>秒级时间戳，Agent运行全链路记录，满足等保2.0</span></div>
                 </div>
               </div>
             </div>
@@ -1507,15 +1485,15 @@ kbd {
                 <div>
                   <p class="text-xs font-bold uppercase mb-2 text-red-600">当前痛点</p>
                   <div class="box box-red"><b>环境不一致</b><span>"在我电脑能跑，到服务器各种问题"</span></div>
-                  <div class="box box-red"><b>研发持有生产密钥</b><span>代码仓库和密钥混在一起，安全隐患</span></div>
-                  <div class="box box-red"><b>LLM执行黑盒</b><span>出问题只能看日志，无法追溯具体哪步调用出错</span></div>
+                  <div class="box box-red"><b>开发平台和Agent所用组件高可用改造复杂</b><span>记忆体、向量数据库高可用改造和部署费时费力</span></div>
+                  <div class="box box-red"><b>Agent运行黑盒</b><span>出问题只能看日志，无法追溯具体哪步调用出错</span></div>
                   <div class="box box-red"><b>工具重复开发</b><span>每个Agent各造轮子，MCP工具无法复用</span></div>
                 </div>
                 <div>
                   <p class="text-xs font-bold uppercase mb-2 text-green-600">AIHCI 对应价值</p>
-                  <div class="box box-green"><b>DevBox容器化开发</b><span>代码+依赖打包为不可变OCI镜像，开发即交付</span></div>
-                  <div class="box box-green"><b>密钥永不下发</b><span>AI算力网关代理所有调用，研发侧用临时Token访问</span></div>
-                  <div class="box box-green"><b>四层链路追踪</b><span>Session→Trace→Span→Generation，毫秒级复盘每步推理</span></div>
+                  <div class="box box-green"><b>内置统一高代码DevBox环境容器化开发</b><span>代码+依赖打包为不可变OCI镜像，开发即交付</span></div>
+                  <div class="box box-green"><b>内置模块向导化部署</b><span>开发平台和Agent运行组件经过高可用改造，可自定义多副本运行，向导化一键部署</span></div>
+                  <div class="box box-green"><b>Agent运行全链路追踪</b><span>Session→Trace→Span→Generation，毫秒级显示每步推理过程</span></div>
                   <div class="box box-green"><b>MCP工具统一共享</b><span>统一注册发现，所有Agent可复用，告别重复造轮子</span></div>
                 </div>
               </div>
@@ -1526,17 +1504,17 @@ kbd {
               <div class="mig-grid">
                 <div>
                   <p class="text-xs font-bold uppercase mb-2 text-red-600">当前痛点</p>
-                  <div class="box box-red"><b>ISV掌控密钥</b><span>不知道数据是否外泄，透明度低</span></div>
+                  <div class="box box-red"><b>ISV掌控资产</b><span>如果是多ISV的Agent，由于Agent流程、Prompt编排、RAG知识库、业务逻辑都是ISV私有格式，无法做到统一管理</span></div>
                   <div class="box box-red"><b>多ISV数据孤岛</b><span>各自独立，没有统一AI数据服务层</span></div>
-                  <div class="box box-red"><b>出问题等厂商上门</b><span>链路不透明，买方无法自查</span></div>
-                  <div class="box box-red"><b>成本无法核实</b><span>Token消耗全由ISV计费，买方无法独立核验</span></div>
+                  <div class="box box-red"><b>运维黑盒，出问题等厂商上门</b><span>如遇智能体超时回答，运行链路不透明，用户自己无法自查，容易扯皮</span></div>
+                  <div class="box box-red"><b>无审计</b><span>缺乏本地Agent多部门权限体系和审计日志。</span></div>
                 </div>
                 <div>
                   <p class="text-xs font-bold uppercase mb-2 text-green-600">AIHCI 对应价值</p>
-                  <div class="box box-green"><b>企业掌握模型密钥</b><span>ISV通过企业网关调用模型，密钥在企业手中</span></div>
+                  <div class="box box-green"><b>用户自掌握资产</b><span>提供本地化私有底座，支持主流开源 Agent高/低代码平台，用户可自建、编排、沉淀自己的Agent资产，格式标准、可导出、可迁移、可复用，不依赖。</span></div>
                   <div class="box box-green"><b>统一数据服务</b><span>pgvector/Milvus统一管理，按需隔离或共享</span></div>
-                  <div class="box box-green"><b>ISV调用链可见</b><span>走AI算力网关，Token消耗和调用链路均可见</span></div>
-                  <div class="box box-green"><b>统一认证入口</b><span>网关层API Key/OAuth2/OIDC统一认证</span></div>
+                  <div class="box box-green"><b>全链路可视运维，责权分明</b><span>内置AI 应用观测、链路追踪、调用监控、Token 用量、异常告警、日志本地留存，故障可自主定位。</span></div>
+                  <div class="box box-green"><b>统一认证入口</b><span>所有用户/Agent操作、调用全量本地审计，满足内控、追责、监管要求</span></div>
                 </div>
               </div>
             </div>
@@ -1563,7 +1541,7 @@ kbd {
               <div class="signal-row">
                 <span style="font-size:1.1rem;flex-shrink:0;padding-top:1px;">🔴</span>
                 <div class="flex-1 text-sm text-gray-600 leading-relaxed min-w-0">
-                  <strong class="block mb-1 text-gray-800">多部门各自独立建设Agent</strong>数据孤岛+安全漏洞+运维灾难三重苦
+                  <strong class="block mb-1 text-gray-800">多部门各自独立建设Agent</strong>数据孤岛+运维灾难两重痛苦，可使用AIHCI工作空间能力进行多部门Agent统一管理
                 </div>
                 <span class="badge bg-red-50 text-red-600 border border-red-200 flex-shrink-0">最强信号</span>
               </div>
@@ -1584,16 +1562,16 @@ kbd {
               <div class="signal-row">
                 <span style="font-size:1.1rem;flex-shrink:0;padding-top:1px;">🟡</span>
                 <div class="flex-1 text-sm text-gray-600 leading-relaxed min-w-0">
-                  <strong class="block mb-1 text-gray-800">在用Dify/自研，但无统一监控审计</strong>痛点已存在，等Agent数量触发临界值
+                  <strong class="block mb-1 text-gray-800">在用Dify/自研，但无统一监控审计</strong>痛点已存在，可推荐使用AIHCI内置低代码开发平台实现Agent统一监控审计
                 </div>
-                <span class="badge bg-gray-100 text-gray-500 border border-gray-200 flex-shrink-0">培育阶段</span>
+                <span class="badge bg-gray-100 text-gray-500 border border-gray-200 flex-shrink-0">初步验证阶段</span>
               </div>
               <div class="signal-row" style="border-bottom:none;">
                 <span style="font-size:1.1rem;flex-shrink:0;padding-top:1px;">⚪</span>
                 <div class="flex-1 text-sm text-gray-600 leading-relaxed min-w-0">
                   <strong class="block mb-1 text-gray-800">只在公有云验证，无本地算力</strong>尚处早期，侧重场景共建，暂缓基础设施推进
                 </div>
-                <span class="badge bg-gray-100 text-gray-500 border border-gray-200 flex-shrink-0">观察阶段</span>
+                <span class="badge bg-gray-100 text-gray-500 border border-gray-200 flex-shrink-0">持续跟进阶段</span>
               </div>
             </div>
           </section>
@@ -1695,7 +1673,7 @@ function copyScript(id, btn) {
     btn.textContent = '✅ 已复制';
     setTimeout(() => {
       btn.classList.remove('copied');
-      btn.textContent = ' 复制话术';
+      btn.textContent = '📋 复制话术';
     }, 2000);
   }).catch(() => {
     // fallback
@@ -1710,33 +1688,6 @@ function copyScript(id, btn) {
     setTimeout(() => {
       btn.classList.remove('copied');
       btn.textContent = '📋 复制话术';
-    }, 2000);
-  });
-}
-
-function copyAccBody(btn) {
-  const body = btn.closest('.acc-body');
-  if (!body) return;
-  const text = body.innerText.replace('📋 复制', '').trim();
-  navigator.clipboard.writeText(text).then(() => {
-    btn.classList.add('copied');
-    btn.textContent = '✅ 已复制';
-    setTimeout(() => {
-      btn.classList.remove('copied');
-      btn.textContent = ' 复制';
-    }, 2000);
-  }).catch(() => {
-    const ta = document.createElement('textarea');
-    ta.value = text;
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    document.body.removeChild(ta);
-    btn.classList.add('copied');
-    btn.textContent = '✅ 已复制';
-    setTimeout(() => {
-      btn.classList.remove('copied');
-      btn.textContent = ' 复制';
     }, 2000);
   });
 }
