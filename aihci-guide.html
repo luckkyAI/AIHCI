@@ -763,7 +763,6 @@ kbd {
                 涵盖典型客户识别、微信约访话术及常见客户问题应对，帮助销售快速破冰、精准推进商机。
               </p>
             </div>
-          </section>
 
           <section class="doc-sec" id="s-ctype" data-title="找典型客户">
             <h2 style="margin-top:0">找典型客户类型</h2>
@@ -1017,6 +1016,34 @@ kbd {
                 <div class="box box-green">
                   <b>✅ 应对：私有化部署核心优势</b>
                   理解您说的，这正是我们<strong style="color:var(--blue)">私有化部署的核心优势</strong>所在。AI HCI在原HCI基础上平滑演进，完全部署在您自己的机房或私有云，<strong style="color:var(--blue)">数据不出门</strong>，模型推理也可以选择私有化部署的模型或托管云安全算力。
+                </div>
+              </div>
+            </div>
+
+            <!-- Q5 -->
+            <div class="card">
+              <button class="acc-btn w-full flex items-start gap-3 text-left touch" onclick="toggleAcc(this)" aria-expanded="false">
+                <span class="badge flex-shrink-0 mt-0.5" style="background:var(--amber-bg);border:1px solid #FDE68A;color:var(--amber);">问题⑤</span>
+                <div style="font-size:.9em;font-style:italic;flex:1;line-height:1.55;color:var(--text2);">"我们已经有你们的HCI，支持升级为AI超融合吗？且支持部署在C86服务器上吗？"</div>
+                <span class="acc-icon text-xl flex-shrink-0 mt-0.5" style="color:var(--text3);">›</span>
+              </button>
+              <div class="acc-body pt-3 mt-3 border-t border-gray-200 text-sm text-gray-600 leading-relaxed">
+                <div class="box box-green">
+                  <div class="flex items-center justify-between mb-1">
+                    <b>✅ 应对：版本兼容性说明</b>
+                    <button class="copy-btn-sm" onclick="copyBox(this)">📋 复制</button>
+                  </div>
+                  <p style="margin-bottom:8px;">支持从现有HCI平滑升级至AI超融合，具体版本支持如下：</p>
+                  <p style="margin-bottom:4px;"><strong style="color:var(--blue);">1. SCP版本支持：</strong>6.10.0 / 6.10.2 / 6.10.0R1 / 6.11.1 / 6.11.1R1 / 6.11.2</p>
+                  <p style="margin-bottom:4px;"><strong style="color:var(--blue);">2. HCI底座版本支持：</strong>6.8.0 / 6.8.0R1 / 6.8.0R2 / 6.9.0 / 6.9.1 / 6.10.0 / 6.10.0R1 / 6.10.0R2 / 6.11.0 / 6.11.1 / 6.11.1R1 / 6.11.3 / 6.12.0</p>
+                  <p style="margin-bottom:4px;"><strong style="color:var(--blue);">3. SKE版本支持：</strong>1.0.0 / 1.1.0 / 2.0.0</p>
+                </div>
+                <div class="box box-amber">
+                  <div class="flex items-center justify-between mb-1">
+                    <b>⚠️ 硬件平台说明</b>
+                    <button class="copy-btn-sm" onclick="copyBox(this)"> 复制</button>
+                  </div>
+                  目前<strong style="color:var(--blue)">仅支持在C86硬件上部署</strong>，不支持底层OS信创（如麒麟）+ 硬件信创。预计2026年5月30日支持信创平台。
                 </div>
               </div>
             </div>
