@@ -6,6 +6,41 @@
 <title>深信服 AI超融合 · 作战指引手册 2026</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
+<!-- ═══════════════════════════════════════════
+     AI 超融合问答助手（悬浮窗）
+═══════════════════════════════════════════ -->
+<div id="ai-assistant-wrapper" style="position:fixed;bottom:20px;right:20px;z-index:9998;display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
+  <button id="ai-assistant-toggle" onclick="toggleAIAssistant()" style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#1557BE,#2470D8);border:none;color:#fff;font-size:24px;cursor:pointer;box-shadow:0 4px 16px rgba(21,87,190,.4);display:flex;align-items:center;justify-content:center;transition:transform .2s,box-shadow .2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+    🤖
+  </button>
+  <div id="ai-assistant-panel" style="display:none;width:380px;height:520px;border-radius:14px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.18);border:1px solid var(--border);background:var(--surface);">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:linear-gradient(135deg,#0D3D8A,#1557BE);color:#fff;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span style="width:8px;height:8px;border-radius:50%;background:#4ade80;animation:pulse 2s infinite"></span>
+        <span style="font-size:.85rem;font-weight:700;">AI 超融合问答助手</span>
+      </div>
+      <button onclick="toggleAIAssistant()" style="background:rgba(255,255,255,.15);border:none;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;">×</button>
+    </div>
+    <iframe
+      src="https://fastgpt.sangfor.com.cn:18443/chat/share?shareId=guTfNujPAqOPTwJWLuQPhHJG"
+      style="width:100%;height:calc(100% - 48px);border:none;"
+      allow="microphone *; *"
+    ></iframe>
+  </div>
+</div>
+
+<script>
+function toggleAIAssistant() {
+  const panel = document.getElementById('ai-assistant-panel');
+  if (panel.style.display === 'none') {
+    panel.style.display = 'block';
+    panel.style.animation = 'fadein .3s ease';
+  } else {
+    panel.style.display = 'none';
+  }
+}
+</script>
+
 <script>
   tailwind.config = {
     darkMode: 'class',
@@ -1916,16 +1951,5 @@ function init() {
 }
 init();
 </script>
-<script 
-   type="text/javascript" 
-   src="https://fastgpt.sangfor.com.cn:18443/js/iframe.js" 
-   id="chatbot-iframe" 
-   data-bot-src="https://fastgpt.sangfor.com.cn:18443/chat/share?shareId=b9oL5Tpn2uX0VBxKj4jYQLma&showHistory=0" 
-   data-default-open="false" 
-   data-drag="false" 
-   data-open-icon="data:image/svg+xml;base64,PHN2ZyB0PSIxNjkwNTMyNzg1NjY0IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjQxMzIiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48cGF0aCBkPSJNNTEyIDMyQzI0Ny4wNCAzMiAzMiAyMjQgMzIgNDY0QTQxMC4yNCA0MTAuMjQgMCAwIDAgMTcyLjQ4IDc2OEwxNjAgOTY1LjEyYTI1LjI4IDI1LjI4IDAgMCAwIDM5LjA0IDIyLjRsMTY4LTExMkE1MjguNjQgNTI4LjY0IDAgMCAwIDUxMiA4OTZjMjY0Ljk2IDAgNDgwLTE5MiA0ODAtNDMyUzc3Ni45NiAzMiA1MTIgMzJ6IG0yNDQuOCA0MTZsLTM2MS42IDMwMS43NmExMi40OCAxMi40OCAwIDAgMS0xOS44NC0xMi40OGw1OS4yLTIzMy45MmgtMTYwYTEyLjQ4IDEyLjQ4IDAgMCAxLTcuMzYtMjMuMzZsMzYxLjYtMzAxLjc2YTEyLjQ4IDEyLjQ4IDAgMCAxIDE5Ljg0IDEyLjQ4bC01OS4yIDIzMy45MmgxNjBhMTIuNDggMTIuNDggMCAwIDEgOCAyMi4wOHoiIGZpbGw9IiM0ZTgzZmQiIHAtaWQ9IjQxMzMiPjwvcGF0aD48L3N2Zz4=" 
-   data-close-icon="data:image/svg+xml;base64,PHN2ZyB0PSIxNjkwNTM1NDQxNTI2IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjYzNjciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48cGF0aCBkPSJNNTEyIDEwMjRBNTEyIDUxMiAwIDEgMSA1MTIgMGE1MTIgNTEyIDAgMCAxIDAgMTAyNHpNMzA1Ljk1NjU3MSAzNzAuMzk1NDI5TDQ0Ny40ODggNTEyIDMwNS45NTY1NzEgNjUzLjYwNDU3MWE0NS41NjggNDUuNTY4IDAgMSAwIDY0LjQzODg1OCA2NC40Mzg4NThMNTEyIDU3Ni41MTJsMTQxLjYwNDU3MSAxNDEuNTMxNDI5YTQ1LjU2OCA0NS41NjggMCAwIDAgNjQuNDM4ODU4LTY0LjQzODg1OEw1NzYuNTEyIDUxMmwxNDEuNTMxNDI5LTE0MS42MDQ1NzFhNDUuNTY4IDQ1LjU2OCAwIDEgMC02NC40Mzg4NTgtNjQuNDM4ODU4TDUxMiA0NDcuNDg4IDM3MC4zOTU0MjkgMzA1Ljk1NjU3MWE0NS41NjggNDUuNTY4IDAgMCAwLTY0LjQzODg1OCA2NC40Mzg4NTh6IiBmaWxsPSIjNGU4M2ZkIiBwLWlkPSI2MzY4Ij48L3BhdGg+PC9zdmc+" 
-   defer 
-></script> 
 </body>
 </html>
