@@ -6,6 +6,7 @@
 <title>深信服 AI超融合 · 作战指引手册 2026</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
+
 <!-- ═══════════════════════════════════════════
      AI 超融合问答助手（悬浮窗）
 ═══════════════════════════════════════════ -->
@@ -631,6 +632,9 @@ kbd {
 
 /* role content containers */
 #content-sales, #content-presales { display: none; }
+
+/* ─── STATS MODAL ─── */
+#stats-panel { animation: fadein .2s ease; }
 </style>
 </head>
 <body class="fs-md">
@@ -701,6 +705,9 @@ kbd {
     </div>
 
     <div class="ml-auto flex items-center gap-2">
+      <button onclick="showStatsPanel()" class="touch flex items-center justify-center w-9 h-9 rounded-lg bg-white/10 hover:bg-white/20 transition text-base text-white" title="阅读统计" aria-label="查看阅读统计">
+        📊
+      </button>
       <button id="print-btn" class="touch flex items-center justify-center w-9 h-9 rounded-lg bg-white/10 hover:bg-white/20 transition text-base text-white" title="打印/PDF" aria-label="打印为PDF">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
       </button>
@@ -1885,7 +1892,7 @@ function buildToc() {
   const container = currentRole === 'sales' ? '#content-sales' : '#content-presales';
   const secs = $$(`${container} .doc-sec[data-title]`);
   const html = secs.map(s =>
-    `<a href="#${s.id}" class="toc-a" data-tid="${s.id}">${s.dataset.title}</a>`
+    `<a href="#${s.id}" class="toc-a" data-tid="${s.id}" onclick="recordSectionClick('${s.id}')">${s.dataset.title}</a>`
   ).join('');
   $('#toc-desktop').innerHTML = html;
   $('#toc-mobile').innerHTML  = html;
@@ -1900,6 +1907,7 @@ function updateProgress() {
 }
 
 let rafPending = false;
+let lastActiveSection = '';
 function onScroll() {
   if (!rafPending) {
     rafPending = true;
@@ -1911,6 +1919,10 @@ function onScroll() {
       $$(`${container} .doc-sec[id]`).forEach(s => {
         if (s.getBoundingClientRect().top <= 80) curId = s.id;
       });
+      if (curId && curId !== lastActiveSection) {
+        lastActiveSection = curId;
+        recordSectionClick(curId);
+      }
       $$('.toc-a').forEach(a => {
         a.classList.toggle('active', a.dataset.tid === curId);
       });
@@ -1938,20 +1950,261 @@ document.addEventListener('keydown', e => {
   if (!secs.length) return;
   if (e.key === 'ArrowDown' || e.key === 'PageDown') {
     e.preventDefault();
-    secs[Math.min(getCurrentIdx() + 1, secs.length - 1)]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const next = secs[Math.min(getCurrentIdx() + 1, secs.length - 1)];
+    if (next) {
+      recordSectionClick(next.id);
+      next.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }
   if (e.key === 'ArrowUp' || e.key === 'PageUp') {
     e.preventDefault();
-    secs[Math.max(getCurrentIdx() - 1, 0)]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const prev = secs[Math.max(getCurrentIdx() - 1, 0)];
+    if (prev) {
+      recordSectionClick(prev.id);
+      prev.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }
   if (e.key === 'Home') { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
 });
+
+/* ── STATS: 阅读量 & 点击量（本地 + 云端同步）─── */
+
+const CLOUDBASE_ENV_ID = 'aihci-guide-d3gr6o0349eab0ebe';
+const STATS_KEY = 'aihci_guide_stats_cloud';
+const CLOUDBASE_CDN = 'https://imgcache.cloudbase.net/cloudbase-js-sdk@2.14.0/cloudbase.full.js';
+
+let cloudbaseApp = null;
+let db = null;
+let statsData = {
+  totalReads: 0,
+  completedReads: 0,
+  sectionClicks: {}
+};
+let pendingSync = false;
+let cloudReady = false;
+
+// 异步加载 CloudBase SDK
+function loadCloudBaseSDK() {
+  return new Promise((resolve, reject) => {
+    if (window.cloudbase) {
+      cloudReady = true;
+      resolve();
+      return;
+    }
+    const script = document.createElement('script');
+    script.src = CLOUDBASE_CDN;
+    script.async = true;
+    script.onload = () => {
+      cloudReady = true;
+      resolve();
+    };
+    script.onerror = () => reject(new Error('CloudBase SDK 加载失败'));
+    document.head.appendChild(script);
+  });
+}
+
+function getLocalStats() {
+  const stored = localStorage.getItem(STATS_KEY);
+  if (stored) {
+    try {
+      return JSON.parse(stored);
+    } catch (e) {}
+  }
+  return {
+    totalReads: 0,
+    completedReads: 0,
+    sectionClicks: {},
+    version: 1
+  };
+}
+
+function saveLocalStats(data) {
+  localStorage.setItem(STATS_KEY, JSON.stringify(data));
+}
+
+async function initCloudBase() {
+  try {
+    await loadCloudBaseSDK();
+    cloudbaseApp = cloudbase.init({ env: CLOUDBASE_ENV_ID });
+    const auth = cloudbaseApp.auth();
+    await auth.anonymousAuthProvider().signIn();
+    db = cloudbaseApp.database();
+    await loadStatsFromCloud();
+  } catch (error) {
+    console.log('CloudBase 离线模式，统计数据将暂存本地');
+  }
+}
+
+async function loadStatsFromCloud() {
+  if (!db) return;
+  try {
+    const res = await db.collection('stats').get({
+      limit: 1
+    });
+    const localData = getLocalStats();
+    
+    if (res.data && res.data.length > 0) {
+      const cloudData = res.data[0];
+      if (cloudData.version && cloudData.version > (localData.version || 0)) {
+        statsData = {
+          totalReads: Math.max(cloudData.totalReads || 0, localData.totalReads || 0),
+          completedReads: Math.max(cloudData.completedReads || 0, localData.completedReads || 0),
+          sectionClicks: { ...localData.sectionClicks, ...cloudData.sectionClicks }
+        };
+      } else {
+        statsData = localData;
+        await syncToCloud();
+      }
+    } else {
+      statsData = localData;
+      await syncToCloud();
+    }
+    saveLocalStats(statsData);
+    updateStatsDisplay();
+  } catch (error) {
+    console.log('加载云端数据失败:', error);
+    statsData = getLocalStats();
+    updateStatsDisplay();
+  }
+}
+
+async function syncToCloud() {
+  if (!db || pendingSync) return;
+  pendingSync = true;
+  try {
+    const res = await db.collection('stats').get({ limit: 1 });
+    if (res.data && res.data.length > 0) {
+      await db.collection('stats').doc(res.data[0]._id).update({
+        ...statsData,
+        version: 1,
+        updatedAt: new Date().toISOString()
+      });
+    } else {
+      await db.collection('stats').add({
+        ...statsData,
+        version: 1,
+        updatedAt: new Date().toISOString()
+      });
+    }
+  } catch (error) {
+    console.log('同步失败，将稍后重试:', error);
+  }
+  pendingSync = false;
+}
+
+function recordRead() {
+  statsData.totalReads++;
+  saveLocalStats(statsData);
+  updateStatsDisplay();
+  syncToCloud();
+}
+
+let readCompleted = false;
+function checkReadCompletion() {
+  if (readCompleted) return;
+  const scrolled = window.scrollY;
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = total > 0 ? scrolled / total : 0;
+  if (pct >= 0.5) {
+    readCompleted = true;
+    statsData.completedReads++;
+    saveLocalStats(statsData);
+    updateStatsDisplay();
+    syncToCloud();
+  }
+}
+
+function recordSectionClick(sectionId) {
+  if (!statsData.sectionClicks) statsData.sectionClicks = {};
+  if (!statsData.sectionClicks[sectionId]) statsData.sectionClicks[sectionId] = 0;
+  statsData.sectionClicks[sectionId]++;
+  saveLocalStats(statsData);
+  updateStatsDisplay();
+  syncToCloud();
+}
+
+function updateStatsDisplay() {
+  const readEl = document.getElementById('stat-reads');
+  const completeEl = document.getElementById('stat-completes');
+  if (readEl) readEl.textContent = statsData.totalReads;
+  if (completeEl) completeEl.textContent = statsData.completedReads;
+}
+
+async function showStatsPanel() {
+  await loadStatsFromCloud();
+  
+  const container = currentRole === 'sales' ? '#content-sales' : '#content-presales';
+  const secs = $$(`${container} .doc-sec[data-title]`);
+  
+  let sectionList = secs.map(s => {
+    const clicks = statsData.sectionClicks[s.id] || 0;
+    return `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:.8rem;">
+      <span style="color:var(--text2);">${s.dataset.title}</span>
+      <span style="color:var(--blue);font-weight:700;">${clicks}</span>
+    </div>`;
+  }).join('');
+
+  const panel = document.createElement('div');
+  panel.id = 'stats-panel';
+  panel.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:99999;display:flex;align-items:center;justify-content:center;';
+  panel.innerHTML = `
+    <div style="background:var(--surface);border-radius:14px;width:90%;max-width:420px;max-height:80vh;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,.2);">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);">
+        <div style="display:flex;align-items:center;gap:8px;font-weight:700;color:var(--text);">
+          <span style="font-size:1.2rem;">📊</span> 阅读与点击统计
+        </div>
+        <button onclick="this.closest('#stats-panel').remove();document.body.style.overflow=''" style="background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--text3);">×</button>
+      </div>
+      <div style="padding:16px 18px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+          <div style="background:var(--bg2);border-radius:10px;padding:12px;text-align:center;">
+            <div style="font-size:1.75rem;font-weight:800;color:var(--blue);">${statsData.totalReads}</div>
+            <div style="font-size:.72rem;color:var(--text3);margin-top:2px;">总访问次数</div>
+          </div>
+          <div style="background:var(--bg2);border-radius:10px;padding:12px;text-align:center;">
+            <div style="font-size:1.75rem;font-weight:800;color:var(--green);">${statsData.completedReads}</div>
+            <div style="font-size:.72rem;color:var(--text3);margin-top:2px;">完整阅读次数</div>
+          </div>
+        </div>
+        <div style="font-size:.8rem;font-weight:700;color:var(--text2);margin-bottom:8px;">📌 章节点击排行</div>
+        <div>${sectionList || '<div style="text-align:center;color:var(--text3);padding:20px;font-size:.85rem;">暂无点击数据</div>'}</div>
+        <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);text-align:center;">
+          <span style="font-size:.7rem;color:var(--text3);">☁️ 数据来源：腾讯云 CloudBase</span>
+        </div>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(panel);
+  document.body.style.overflow = 'hidden';
+  panel.addEventListener('click', e => {
+    if (e.target === panel) {
+      panel.remove();
+      document.body.style.overflow = '';
+    }
+  });
+}
+
+function initStats() {
+  statsData = getLocalStats();
+  updateStatsDisplay();
+  initCloudBase();
+  recordRead();
+  
+  let scrollTimer = null;
+  window.addEventListener('scroll', () => {
+    if (scrollTimer) clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(() => {
+      checkReadCompletion();
+    }, 300);
+  }, { passive: true });
+}
 
 /* ─── INIT ─── */
 function init() {
   setFontSize(localStorage.getItem('sf-fs') || 'md');
   applyDark(dark);
   updateProgress();
+  initStats();
 
   // auto-restore saved role
   if (currentRole) {
